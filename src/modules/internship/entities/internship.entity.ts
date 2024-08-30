@@ -1,5 +1,5 @@
 import { BaseEntity } from 'src/config/base.entity';
-import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { Internship } from '../interfaces/internship.interface';
 import { StudentEntity } from 'src/modules/student/entities/student.entity';
 import { CompanyEntity } from './company.entity';
@@ -19,8 +19,10 @@ export class InternshipEntity extends BaseEntity implements Internship {
 	hours: number;
 
 	@ManyToOne(() => StudentEntity, (student) => student.internship)
+	@JoinColumn({ name: 'student_id' })
 	student: StudentEntity;
 	@ManyToOne(() => CompanyEntity, (company) => company.internship)
+	@JoinColumn({ name: 'company_id' })
 	company: CompanyEntity;
 	@OneToMany(
 		() => InternshipDocumentEntity,

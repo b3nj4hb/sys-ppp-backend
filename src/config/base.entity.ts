@@ -6,12 +6,12 @@ export abstract class BaseEntity {
 	id: string;
 	@CreateDateColumn({
 		type: 'timestamp',
-		name: 'createdAt',
+		name: 'created_at',
 	})
 	created_at: Date;
 	@CreateDateColumn({
 		type: 'timestamp',
-		name: 'updatedAt',
+		name: 'updated_at',
 	})
 	updated_at: Date;
 	@Column({

@@ -20,11 +20,12 @@ export class StudentEntity extends BaseEntity implements Student {
 	@OneToMany(() => InternshipEntity, (internship) => internship.student)
 	internship: InternshipEntity[];
 	@OneToOne(() => ProfileEntity)
-	@JoinColumn()
+	@JoinColumn({ name: 'profile_id' })
 	profile: ProfileEntity;
 	@ManyToOne(
 		() => AcademicCycleEntity,
 		(academic_cycle) => academic_cycle.student,
 	)
+	@JoinColumn({ name: 'academic_cycle_id' })
 	academic_cycle: AcademicCycleEntity;
 }
