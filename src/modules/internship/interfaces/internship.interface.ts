@@ -3,4 +3,5 @@ export interface Internship {
 	end_date: Date;
 	position: string;
 	description: string;
+	hours: number;
 }

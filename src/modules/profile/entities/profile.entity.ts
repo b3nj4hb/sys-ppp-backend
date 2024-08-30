@@ -3,6 +3,7 @@ import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { Profile } from '../interfaces/profile.interface';
 import { RolEntity } from './rol.entity';
 import { StudentEntity } from 'src/modules/student/entities/student.entity';
+import { DocumentEntity } from 'src/modules/internship-document/entities/document.entity';
 
 @Entity({ name: 'profile' })
 export class ProfileEntity extends BaseEntity implements Profile {
@@ -22,7 +23,9 @@ export class ProfileEntity extends BaseEntity implements Profile {
 	code: string;
 
 	@ManyToOne(() => RolEntity, (role) => role.profile)
-	role: RolEntity
+	role: RolEntity;
 	@ManyToOne(() => StudentEntity, (student) => student.profile)
-	student: StudentEntity
+	student: StudentEntity;
+	@OneToMany(() => DocumentEntity, (document) => document.profile)
+	document: DocumentEntity;
 }
