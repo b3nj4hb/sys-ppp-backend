@@ -24,8 +24,8 @@ export class ProfileEntity extends BaseEntity implements Profile {
 
 	@ManyToOne(() => RolEntity, (role) => role.profile)
 	role: RolEntity;
-	@ManyToOne(() => StudentEntity, (student) => student.profile)
-	student: StudentEntity;
+	@OneToMany(() => StudentEntity, (student) => student.profile)
+	student: StudentEntity[];
 	@OneToMany(() => DocumentEntity, (document) => document.profile)
-	document: DocumentEntity;
+	document: DocumentEntity[];
 }

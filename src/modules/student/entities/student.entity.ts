@@ -12,8 +12,8 @@ export class StudentEntity extends BaseEntity implements Student {
 
 	@OneToMany(() => InternshipEntity, (internship) => internship.student)
 	internship: InternshipEntity[];
-	@OneToMany(() => ProfileEntity, (profile) => profile.student)
-	profile: ProfileEntity[];
+	@ManyToOne(() => ProfileEntity, (profile) => profile.student)
+	profile: ProfileEntity;
 	@ManyToOne(
 		() => AcademicCycleEntity,
 		(academic_cycle) => academic_cycle.student,
