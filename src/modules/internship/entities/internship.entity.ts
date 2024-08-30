@@ -14,6 +14,8 @@ export class InternshipEntity extends BaseEntity implements Internship {
 	position: string;
 	@Column()
 	description: string;
+	@Column()
+	hours: number;
 
 	@ManyToOne(() => StudentEntity, (student) => student.internship)
 	student: StudentEntity;
