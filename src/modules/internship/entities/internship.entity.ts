@@ -1,11 +1,11 @@
 import { BaseEntity } from 'src/config/base.entity';
 import { Column, Entity, ManyToOne } from 'typeorm';
-import { Intership } from '../interfaces/intership.interface';
+import { Internship } from '../interfaces/internship.interface';
 import { StudentEntity } from 'src/modules/student/entities/student.entity';
 import { CompanyEntity } from './company.entity';
 
-@Entity({ name: 'intership' })
-export class IntershipEntity extends BaseEntity implements Intership {
+@Entity({ name: 'internship' })
+export class InternshipEntity extends BaseEntity implements Internship {
 	@Column()
 	start_date: Date;
 	@Column()
@@ -15,8 +15,8 @@ export class IntershipEntity extends BaseEntity implements Intership {
 	@Column()
 	description: string;
 
-	@ManyToOne(() => StudentEntity, (student) => student.intership)
+	@ManyToOne(() => StudentEntity, (student) => student.internship)
 	student: StudentEntity;
-	@ManyToOne(() => CompanyEntity, (company) => company.intership)
+	@ManyToOne(() => CompanyEntity, (company) => company.internship)
 	company: CompanyEntity;
 }

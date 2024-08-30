@@ -5,10 +5,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/database.config';
 import { ProfileModule } from './modules/profile/profile.module';
 import { StudentModule } from './modules/student/student.module';
-import { IntershipModule } from './modules/intership/intership.module';
+import { InternshipModule } from './modules/internship/internship.module';
 
 @Module({
-	imports: [TypeOrmModule.forRoot(typeOrmConfig), ProfileModule, StudentModule, IntershipModule],
+	imports: [
+		TypeOrmModule.forRoot(typeOrmConfig),
+		ProfileModule,
+		StudentModule,
+		InternshipModule,
+	],
 	controllers: [AppController],
 	providers: [AppService],
 })
