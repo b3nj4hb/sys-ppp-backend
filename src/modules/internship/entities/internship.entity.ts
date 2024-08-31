@@ -24,9 +24,6 @@ export class InternshipEntity extends BaseEntity implements Internship {
 	@ManyToOne(() => CompanyEntity, (company) => company.internship)
 	@JoinColumn({ name: 'company_id' })
 	company: CompanyEntity;
-	@OneToMany(
-		() => InternshipDocumentEntity,
-		(internshipDocument) => internshipDocument.internship,
-	)
+	@OneToMany(() => InternshipDocumentEntity, (internshipDocument) => internshipDocument.internship)
 	internshipDocument: InternshipDocumentEntity[];
 }
