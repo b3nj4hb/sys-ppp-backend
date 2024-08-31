@@ -3,8 +3,9 @@ import { Evaluation } from '../interfaces/evaluation.interface';
 import { EvaluationStructureEntity } from 'src/modules/evaluation-structure/entities/evaluation-structure.entity';
 import { InternshipEntity } from 'src/modules/internship/entities/internship.entity';
 import { ProfileEntity } from 'src/modules/profile/entities/profile.entity';
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { EvaluationTypeEntity } from './evaluation-type.entity';
+import { DimensionEvaluationEntity } from './dimension-evaluation.entity';
 
 @Entity({ name: 'evaluation' })
 export class EvaluationEntity extends BaseEntity implements Evaluation {
@@ -27,4 +28,6 @@ export class EvaluationEntity extends BaseEntity implements Evaluation {
 	@ManyToOne(() => ProfileEntity, (profile) => profile.evaluation)
 	@JoinColumn({ name: 'evaluator_id' })
 	evaluator: ProfileEntity;
+	@OneToMany(() => DimensionEvaluationEntity, (dimensionEvaluation) => dimensionEvaluation.evaluation)
+	dimensionEvaluation: DimensionEvaluationEntity;
 }
