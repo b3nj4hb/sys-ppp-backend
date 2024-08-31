@@ -3,6 +3,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { Profile } from '../interfaces/profile.interface';
 import { RolEntity } from './rol.entity';
 import { DocumentEntity } from 'src/modules/internship-document/entities/document.entity';
+import { EvaluationEntity } from 'src/modules/evaluation/entities/evaluation.entity';
 
 @Entity({ name: 'profile' })
 export class ProfileEntity extends BaseEntity implements Profile {
@@ -26,4 +27,5 @@ export class ProfileEntity extends BaseEntity implements Profile {
 	role: RolEntity;
 	@OneToMany(() => DocumentEntity, (document) => document.profile)
 	document: DocumentEntity[];
+	evaluation: EvaluationEntity[];
 }

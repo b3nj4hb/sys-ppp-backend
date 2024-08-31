@@ -1,1 +1,5 @@
-export class EvaluationTypeEntity {}
+import { EvaluationEntity } from './evaluation.entity';
+
+export class EvaluationTypeEntity {
+	evaluation: EvaluationEntity[];
+}
