@@ -1,1 +1,3 @@
-export interface EvaluationType {}
+export interface EvaluationType {
+	name: string;
+}
