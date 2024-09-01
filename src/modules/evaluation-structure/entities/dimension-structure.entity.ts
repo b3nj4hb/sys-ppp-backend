@@ -9,7 +9,7 @@ import { QuestionStructureEntity } from './question-structure.entity';
 export class DimensionStructureEntity extends BaseEntity implements DimensionStructure {
 	@Column()
 	name: string;
-	@Column({ type: 'tinyint' })
+	@Column()
 	order: number;
 
 	@ManyToOne(() => EvaluationStructureEntity, (evaluationStructure) => evaluationStructure.dimensionStructure)

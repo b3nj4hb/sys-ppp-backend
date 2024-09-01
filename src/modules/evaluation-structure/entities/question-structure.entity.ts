@@ -8,7 +8,7 @@ import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 export class QuestionStructureEntity extends BaseEntity implements QuestionStructure {
 	@Column()
 	text: string;
-	@Column({ type: 'tinyint' })
+	@Column()
 	order: number;
 
 	@ManyToOne(() => DimensionStructureEntity, (dimensionStructure) => dimensionStructure.questionStructure)

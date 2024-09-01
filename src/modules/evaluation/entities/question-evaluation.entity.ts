@@ -6,7 +6,7 @@ import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
 @Entity({ name: 'question_evaluation' })
 export class QuestionEvaluationEntity extends BaseEntity implements QuestionEvaluation {
-	@Column({ type: 'tinyint', nullable: true })
+	@Column({ nullable: true })
 	score: number | null;
 
 	@ManyToOne(() => DimensionEvaluationEntity, (dimensionEvaluation) => dimensionEvaluation.questionEvaluation)
