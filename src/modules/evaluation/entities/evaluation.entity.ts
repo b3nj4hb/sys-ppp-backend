@@ -13,7 +13,7 @@ export class EvaluationEntity extends BaseEntity implements Evaluation {
 	evaluation_date: string;
 	@Column({ type: 'time' })
 	evaluation_hour: string;
-	@Column({ type: 'tinyint' })
+	@Column({ type: 'tinyint', nullable: true })
 	general_score: number | null;
 
 	@ManyToOne(() => EvaluationTypeEntity, (evaluationType) => evaluationType.evaluation)

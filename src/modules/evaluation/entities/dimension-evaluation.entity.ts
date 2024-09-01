@@ -11,7 +11,7 @@ export class DimensionEvaluationEntity extends BaseEntity implements DimensionEv
 	evaluation: EvaluationEntity;
 	@ManyToOne(() => DimensionStructureEntity, (dimensionStructure) => dimensionStructure.dimensionEvaluation)
 	dimensionStructure: DimensionStructureEntity;
-	@Column({ type: 'tinyint' })
+	@Column({ type: 'tinyint', nullable: true })
 	dimensionScore: number | null;
 
 	@OneToMany(() => QuestionEvaluationEntity, (questionEvaluation) => questionEvaluation.dimensionEvaluation)
