@@ -1,7 +1,7 @@
 import { BaseEntity } from 'src/config/base.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { Profile } from '../interfaces/profile.interface';
-import { RolEntity } from './rol.entity';
+import { RoleEntity } from './role.entity';
 import { DocumentEntity } from 'src/modules/internship-document/entities/document.entity';
 import { EvaluationEntity } from 'src/modules/evaluation/entities/evaluation.entity';
 
@@ -22,9 +22,9 @@ export class ProfileEntity extends BaseEntity implements Profile {
 	@Column()
 	code: string;
 
-	@ManyToOne(() => RolEntity, (role) => role.profile)
+	@ManyToOne(() => RoleEntity, (role) => role.profile)
 	@JoinColumn({ name: 'role_id' })
-	role: RolEntity;
+	role: RoleEntity;
 	@OneToMany(() => DocumentEntity, (document) => document.profile)
 	document: DocumentEntity[];
 	evaluation: EvaluationEntity[];
