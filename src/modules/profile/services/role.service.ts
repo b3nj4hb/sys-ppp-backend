@@ -13,11 +13,11 @@ export class RoleService implements OnModuleInit {
 
 	async onModuleInit() {
 		if (process.env.NODE_ENV !== 'production') {
-			await this.roleSeed();
+			await this.seedRoles();
 		}
 	}
 
-	async roleSeed() {
+	async seedRoles() {
 		try {
 			// Inserta roles
 			const roles = roleData.roles;
@@ -28,6 +28,7 @@ export class RoleService implements OnModuleInit {
 				savedRoles.push(savedRole);
 				console.log(`Role saved: ${role.name}`);
 			}
+			return savedRoles;
 		} catch (error) {
 			console.error('Error seeding data:', error);
 		}
