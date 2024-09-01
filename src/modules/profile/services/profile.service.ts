@@ -38,6 +38,7 @@ export class ProfileService implements OnModuleInit {
 				savedProfiles.push(savedProfile);
 				console.log(`Profile saved: ${profile.first_name} ${profile.last_name}`);
 			}
+			return savedProfiles;
 		} catch (error) {
 			console.error('Error seeding profiles:', error);
 		}
