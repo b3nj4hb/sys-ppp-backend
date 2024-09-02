@@ -13,24 +13,30 @@ export class RoleService implements OnModuleInit {
 
 	async onModuleInit() {
 		if (process.env.NODE_ENV !== 'production') {
-			await this.seedRoles();
+			// await this.seedRoles(); // Evitar dbble ejecucion
 		}
 	}
 
 	async seedRoles() {
 		try {
-			// Inserta roles
-			const roles = roleData.roles;
 			const savedRoles = [];
-			for (const role of roles) {
-				const RoleEntity = this.roleRepository.create(role);
-				const savedRole = await this.roleRepository.save(RoleEntity);
-				savedRoles.push(savedRole);
-				console.log(`Role saved: ${role.name}`);
+			for (const role of roleData.roles) {
+				const existingRole = await this.roleRepository.findOne({
+					where: { name: role.name },
+				});
+				if (!existingRole) {
+					const roleEntity = this.roleRepository.create(role);
+					const savedRole = await this.roleRepository.save(roleEntity);
+					savedRoles.push(savedRole);
+					console.log(`Role saved: ${role.name}`);
+				} else {
+					console.log(`Role already exists: ${role.name}`);
+					savedRoles.push(existingRole);
+				}
 			}
 			return savedRoles;
 		} catch (error) {
-			console.error('Error seeding data:', error);
+			console.error('Error seeding roles:', error);
 		}
 	}
 }
