@@ -15,7 +15,7 @@ export class ProfileService implements OnModuleInit {
 
 	async onModuleInit() {
 		if (process.env.NODE_ENV !== 'production') {
-			await this.seedProfiles();
+			// await this.seedProfiles(); // Evitar doble ejecucion
 		}
 	}
 	async seedProfiles() {
