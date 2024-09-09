@@ -12,6 +12,8 @@ export class ProfileEntity extends BaseEntity implements Profile {
 	@Column()
 	email: string;
 	@Column()
+	password: string;
+	@Column()
 	first_name: string;
 	@Column()
 	middle_name: string;
