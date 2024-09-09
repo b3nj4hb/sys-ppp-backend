@@ -9,6 +9,7 @@ export const profileData = {
 			second_last_name: 'Bailon',
 			code: '202010352',
 			role: 'Estudiante',
+			password: '$2b$10$ChpXgoUe5aCjokCEQq8lIOcTYlnXgL59NQnw7ZpH75SClf4KAmtpi',
 		},
 		{
 			username: 'paulo.huaman',
@@ -19,6 +20,7 @@ export const profileData = {
 			second_last_name: 'Calderon',
 			code: '202010398',
 			role: 'Estudiante',
+			password: '$2b$10$ChpXgoUe5aCjokCEQq8lIOcTYlnXgL59NQnw7ZpH75SClf4KAmtpi',
 		},
 		{
 			username: 'josue.diaz',
@@ -29,6 +31,7 @@ export const profileData = {
 			second_last_name: 'Moran',
 			code: '202010349',
 			role: 'Estudiante',
+			password: '$2b$10$ChpXgoUe5aCjokCEQq8lIOcTYlnXgL59NQnw7ZpH75SClf4KAmtpi',
 		},
 		{
 			username: 'ppp.ingsistemas',
@@ -39,6 +42,7 @@ export const profileData = {
 			second_last_name: 'Barreto',
 			code: '202010349',
 			role: 'Docente',
+			password: '$2b$10$ChpXgoUe5aCjokCEQq8lIOcTYlnXgL59NQnw7ZpH75SClf4KAmtpi',
 		},
 	],
 };
