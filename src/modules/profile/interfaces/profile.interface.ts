@@ -7,4 +7,6 @@ export class Profile {
 	last_name: string;
 	second_last_name: string;
 	code: string;
+	phone: string;
+	avatar_url: string;
 }

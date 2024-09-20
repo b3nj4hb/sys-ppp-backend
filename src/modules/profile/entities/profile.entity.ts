@@ -23,6 +23,10 @@ export class ProfileEntity extends BaseEntity implements Profile {
 	second_last_name: string;
 	@Column()
 	code: string;
+	@Column({ nullable: true })
+	phone: string;
+	@Column({ nullable: true })
+	avatar_url: string;
 
 	@ManyToOne(() => RoleEntity, (role) => role.profile)
 	@JoinColumn({ name: 'role_id' })
