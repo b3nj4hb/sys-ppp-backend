@@ -12,6 +12,8 @@ export class ProfileEntity extends BaseEntity implements Profile {
 	username: string;
 	@Column()
 	email: string;
+	@Column({ nullable: true })
+	password: string;
 	@Column()
 	first_name: string;
 	@Column()
@@ -22,6 +24,10 @@ export class ProfileEntity extends BaseEntity implements Profile {
 	second_last_name: string;
 	@Column()
 	code: string;
+	@Column({ nullable: true })
+	phone: string;
+	@Column({ nullable: true })
+	avatar_url: string;
 
 	@OneToOne(() => StudentEntity, (student) => student.profile)
 	student: StudentEntity;

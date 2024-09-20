@@ -8,6 +8,7 @@ import { StudentModule } from './modules/student/student.module';
 import { InternshipModule } from './modules/internship/internship.module';
 import { EvaluationModule } from './modules/evaluation/evaluation.module';
 import { EvaluationStructureModule } from './modules/evaluation-structure/evaluation-structure.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
 	imports: [
@@ -17,6 +18,7 @@ import { EvaluationStructureModule } from './modules/evaluation-structure/evalua
 		InternshipModule,
 		EvaluationModule,
 		EvaluationStructureModule,
+		AuthModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],
