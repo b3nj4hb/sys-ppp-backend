@@ -13,6 +13,10 @@ export class CompanyEntity extends BaseEntity implements Company {
 	contact_person: string;
 	@Column()
 	contact_email: string;
+	@Column()
+	academic_degree: string;
+	@Column()
+	position: string;
 
 	@OneToMany(() => InternshipEntity, (internship) => internship.company)
 	internship: InternshipEntity[];
