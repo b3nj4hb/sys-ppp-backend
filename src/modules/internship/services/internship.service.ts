@@ -62,7 +62,7 @@ export class InternshipService {
 			company.contact_person = companyData.contact_person;
 			company.academic_degree = companyData.academic_degree;
 			company.position = companyData.position;
-			company.contact_email = companyData.contact_email; // Asegúrate de tener este campo en la entidad
+			company.contact_email = companyData.contact_email;
 			company.address = companyData.address;
 
 			// Guardar los cambios en la base de datos
