@@ -1,22 +1,19 @@
-import { BaseEntity } from 'src/config/base.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
 import { Company } from '../interfaces/company.interface';
 import { InternshipEntity } from './internship.entity';
 
 @Entity({ name: 'company' })
-export class CompanyEntity extends BaseEntity implements Company {
+export class CompanyEntity implements Company {
 	@Column()
-	name: string;
+	company_name: string;
 	@Column()
-	address: string;
+	state: string;
 	@Column()
-	contact_person: string;
+	direction: string;
 	@Column()
-	contact_email: string;
+	distric: string;
 	@Column()
-	academic_degree: string;
-	@Column()
-	position: string;
+	province: string;
 
 	@OneToMany(() => InternshipEntity, (internship) => internship.company)
 	internship: InternshipEntity[];
