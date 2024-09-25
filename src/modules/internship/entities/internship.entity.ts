@@ -2,7 +2,7 @@ import { BaseEntity } from 'src/config/base.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { Internship } from '../interfaces/internship.interface';
 import { StudentEntity } from 'src/modules/student/entities/student.entity';
-import { CompanyEntity } from './company.entity';
+import { CompanyEntity } from '../../company/entities/company.entity';
 import { InternshipDocumentEntity } from 'src/modules/internship-document/entities/internship-document.entity';
 import { EvaluationEntity } from 'src/modules/evaluation/entities/evaluation.entity';
 

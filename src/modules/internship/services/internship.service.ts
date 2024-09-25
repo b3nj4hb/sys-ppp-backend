@@ -6,8 +6,8 @@ import { StudentEntity } from 'src/modules/student/entities/student.entity';
 import { Student } from 'src/modules/student/interfaces/student.interface';
 import { ProfileEntity } from 'src/modules/profile/entities/profile.entity';
 import { AcademicCycleEntity } from 'src/modules/student/entities/academic_cycle.entity';
-import { Company } from '../interfaces/company.interface';
-import { CompanyEntity } from '../entities/company.entity';
+import { Company } from '../../company/interfaces/company.interface';
+import { CompanyEntity } from '../../company/entities/company.entity';
 import { InternshipEntity } from '../entities/internship.entity';
 
 @Injectable()
