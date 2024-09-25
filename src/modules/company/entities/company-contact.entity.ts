@@ -1,6 +1,7 @@
-import { Column, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { CompanyEntity } from './company.entity';
 
+@Entity({ name: 'company_contact' })
 export class CompanyContactEntity implements CompanyContactEntity {
 	@Column()
 	name_representative: string;
