@@ -2,17 +2,16 @@ import { Column, Entity, OneToMany } from 'typeorm';
 import { InternshipEntity } from '../../internship/entities/internship.entity';
 import { CompanyContactEntity } from './company-contact.entity';
 import { Company } from '../interfaces/company.interface';
+import { BaseEntity } from 'src/config/base.entity';
 
 @Entity({ name: 'company' })
-export class CompanyEntity implements Company {
+export class CompanyEntity extends BaseEntity implements Company {
 	@Column()
 	company_name: string;
 	@Column()
-	state: string;
-	@Column()
 	direction: string;
 	@Column()
-	distric: string;
+	district: string;
 	@Column()
 	province: string;
 
