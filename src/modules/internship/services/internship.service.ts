@@ -30,6 +30,7 @@ export class InternshipService {
 			.leftJoinAndSelect('student.profile', 'profile')
 			.leftJoinAndSelect('student.academic_cycle', 'academicCycle')
 			.leftJoinAndSelect('internship.company', 'company')
+			.leftJoinAndSelect('company.company_contact', 'company_contact')
 			.getMany();
 
 		if (!internships || internships.length === 0) {
@@ -37,18 +38,22 @@ export class InternshipService {
 		}
 
 		return internships.map((internship) => {
-			const { student, company, start_date, end_date, status } = internship;
+			const { id, student, company, position, start_date, end_date, status } = internship;
 			const { profile, academic_cycle } = student || {};
 
 			return {
+				internshipId: id,
 				studentName: profile ? `${profile.first_name || ''} ${profile.middle_name || ''} ${profile.last_name || ''} ${profile.second_last_name || ''}`.trim() : 'No profile data',
 				studentCode: profile ? profile.code : 'No code available',
-				academicCycle: internship.student.academic_cycle.name || 'No academic cycle available',
+				studentAvatarUrl: profile ? profile.avatar_url : 'No avatar available',
+				academicCycle: academic_cycle ? academic_cycle.name : 'No academic cycle available',
 				academicCycleDescription: academic_cycle ? academic_cycle.description : 'No description available',
 				companyName: company ? company.company_name : 'No company data',
+				companyRUC: company ? company.ruc : 'No RUC available',
 				startDate: start_date ? start_date.toISOString().split('T')[0] : 'No start date',
 				endDate: end_date ? end_date.toISOString().split('T')[0] : 'No end date',
 				internshipStatus: status || 'No status available',
+				internshipPosition: position || 'No position available',
 			};
 		});
 	}
@@ -70,9 +75,12 @@ export class InternshipService {
 
 		const { company, position, start_date, end_date, status } = internship;
 		const companyContact: { name_representative?: string; email?: string; phone?: string } = company.company_contact.length > 0 ? company.company_contact[0] : {};
+		const { profile, academic_cycle } = internship.student || {};
 
 		return {
 			studentCode: code,
+			studentName: profile ? `${profile.first_name || ''} ${profile.middle_name || ''} ${profile.last_name || ''} ${profile.second_last_name || ''}`.trim() : 'No profile data',
+			studentAvatarUrl: profile ? profile.avatar_url : 'No avatar available',
 			companyRepresentative: companyContact.name_representative || 'No representative',
 			companyEmail: companyContact.email || 'No email available',
 			companyPhone: companyContact.phone || 'No phone available',
