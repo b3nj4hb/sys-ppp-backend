@@ -1,12 +1,5 @@
 import { BaseEntity } from 'src/config/base.entity';
-import {
-	Column,
-	Entity,
-	JoinColumn,
-	ManyToOne,
-	OneToMany,
-	OneToOne,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from 'typeorm';
 import { Student } from '../interfaces/student.interface';
 import { InternshipEntity } from 'src/modules/internship/entities/internship.entity';
 import { ProfileEntity } from 'src/modules/profile/entities/profile.entity';
@@ -19,13 +12,10 @@ export class StudentEntity extends BaseEntity implements Student {
 
 	@OneToMany(() => InternshipEntity, (internship) => internship.student)
 	internship: InternshipEntity[];
-	@OneToOne(() => ProfileEntity)
+	@OneToOne(() => ProfileEntity, (profile) => profile.student)
 	@JoinColumn({ name: 'profile_id' })
 	profile: ProfileEntity;
-	@ManyToOne(
-		() => AcademicCycleEntity,
-		(academic_cycle) => academic_cycle.student,
-	)
+	@ManyToOne(() => AcademicCycleEntity, (academic_cycle) => academic_cycle.student)
 	@JoinColumn({ name: 'academic_cycle_id' })
 	academic_cycle: AcademicCycleEntity;
 }

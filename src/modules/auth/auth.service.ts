@@ -29,7 +29,6 @@ export class AuthService {
 	private async findUserByEmail(email: string): Promise<any> {
 		return await this.profileRepository.findOne({
 			where: { email: email },
-			relations: ['role'],
 		});
 	}
 
