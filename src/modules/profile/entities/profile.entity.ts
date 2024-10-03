@@ -28,7 +28,7 @@ export class ProfileEntity extends BaseEntity implements Profile {
 	@Column({ nullable: true })
 	avatar_url: string;
 	@Column({ type: 'enum', enum: ['student', 'admin', 'secretary'], default: 'student' })
-	status: 'student' | 'admin' | 'secretary';
+	role: 'student' | 'admin' | 'secretary';
 
 	@OneToOne(() => StudentEntity, (student) => student.profile)
 	student: StudentEntity;
