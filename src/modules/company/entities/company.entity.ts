@@ -14,10 +14,12 @@ export class CompanyEntity extends BaseEntity implements Company {
 	district: string;
 	@Column()
 	province: string;
+	@Column()
+	ruc: string;
 
 	@OneToMany(() => InternshipEntity, (internship) => internship.company)
 	internship: InternshipEntity[];
 
-	@OneToMany(() => CompanyContactEntity, (company_contact) => company_contact)
-	company_contact: CompanyContactEntity[];
+	@OneToMany(() => CompanyContactEntity, (company_contact) => company_contact.company)
+	company_contact: CompanyContactEntity[]; // Referencia correcta a la propiedad "company"
 }

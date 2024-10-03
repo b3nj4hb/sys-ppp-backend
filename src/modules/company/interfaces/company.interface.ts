@@ -3,4 +3,5 @@ export interface Company {
 	direction: string;
 	district: string;
 	province: string;
+	ruc: string;
 }

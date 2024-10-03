@@ -1,9 +1,9 @@
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { CompanyEntity } from './company.entity';
 import { BaseEntity } from 'src/config/base.entity';
 
 @Entity({ name: 'company_contact' })
-export class CompanyContactEntity extends BaseEntity implements CompanyContactEntity {
+export class CompanyContactEntity extends BaseEntity {
 	@Column()
 	name_representative: string;
 	@Column()
@@ -16,5 +16,6 @@ export class CompanyContactEntity extends BaseEntity implements CompanyContactEn
 	email: string;
 
 	@ManyToOne(() => CompanyEntity, (company) => company.company_contact)
+	@JoinColumn({ name: 'company_id' })
 	company: CompanyEntity;
 }
