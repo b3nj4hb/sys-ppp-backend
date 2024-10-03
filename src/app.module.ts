@@ -9,6 +9,7 @@ import { InternshipModule } from './modules/internship/internship.module';
 import { EvaluationModule } from './modules/evaluation/evaluation.module';
 import { EvaluationStructureModule } from './modules/evaluation-structure/evaluation-structure.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { CompanyModule } from './modules/company/company.module';
 
 @Module({
 	imports: [
@@ -19,6 +20,7 @@ import { AuthModule } from './modules/auth/auth.module';
 		EvaluationModule,
 		EvaluationStructureModule,
 		AuthModule,
+		CompanyModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

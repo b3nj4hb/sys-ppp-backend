@@ -1,23 +1,20 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { InternshipService } from '../services/internship.service';
-import { CompanyDto, InternshipDto } from '../dto/internship.dto';
+import { JwtAuthGuard } from 'src/modules/auth/jwt-auth.guard';
 
 @Controller('internship')
 export class InternshipController {
 	constructor(private readonly internshipService: InternshipService) {}
 
-	@Get('/student-by-code/:studentCode')
-	async getStudentDataByCode(@Param('studentCode') studentCode: string) {
-		return this.internshipService.getStudentDataByCode(studentCode);
+	@UseGuards(JwtAuthGuard)
+	@Get('list')
+	async listStudentInternships() {
+		return this.internshipService.listStudentInternships();
 	}
 
-	@Post('/company')
-	async updateOrCreateCompany(@Body() companyData: CompanyDto) {
-		return this.internshipService.updateOrCreateCompany(companyData);
-	}
-
-	@Post('/internship')
-	async createInternship(@Body() internshipDto: InternshipDto) {
-		return this.internshipService.createInternship(internshipDto);
+	@UseGuards(JwtAuthGuard)
+	@Get('details/:code')
+	async getInternshipDetailsByStudentCode(@Param('code') code: string) {
+		return this.internshipService.getInternshipDetailsByStudentCode(code);
 	}
 }
