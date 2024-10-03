@@ -18,6 +18,8 @@ export class InternshipEntity extends BaseEntity implements Internship {
 	description: string;
 	@Column()
 	hours: number;
+	@Column({ type: 'enum', enum: ['pending', 'approved', 'rejected'], default: 'pending' })
+	status: 'pending' | 'approved' | 'rejected';
 
 	@ManyToOne(() => StudentEntity, (student) => student.internship)
 	@JoinColumn({ name: 'student_id' })
