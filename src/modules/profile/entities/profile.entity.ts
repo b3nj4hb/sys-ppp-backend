@@ -1,5 +1,5 @@
 import { BaseEntity } from 'src/config/base.entity';
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from 'typeorm';
+import { Column, Entity, OneToMany, OneToOne } from 'typeorm';
 import { Profile } from '../interfaces/profile.interface';
 import { DocumentEntity } from 'src/modules/internship-document/entities/document.entity';
 import { EvaluationEntity } from 'src/modules/evaluation/entities/evaluation.entity';

@@ -23,41 +23,6 @@ export class InternshipService {
 		private readonly internshipRepository: Repository<InternshipEntity>,
 	) {}
 
-	async listStudentInternships() {
-		const internships = await this.internshipRepository
-			.createQueryBuilder('internship')
-			.leftJoinAndSelect('internship.student', 'student')
-			.leftJoinAndSelect('student.profile', 'profile')
-			.leftJoinAndSelect('student.academic_cycle', 'academicCycle')
-			.leftJoinAndSelect('internship.company', 'company')
-			.leftJoinAndSelect('company.company_contact', 'company_contact')
-			.getMany();
-
-		if (!internships || internships.length === 0) {
-			throw new NotFoundException('No internships found');
-		}
-
-		return internships.map((internship) => {
-			const { id, student, company, position, start_date, end_date, status } = internship;
-			const { profile, academic_cycle } = student || {};
-
-			return {
-				internshipId: id,
-				studentName: profile ? `${profile.first_name || ''} ${profile.middle_name || ''} ${profile.last_name || ''} ${profile.second_last_name || ''}`.trim() : 'No profile data',
-				studentCode: profile ? profile.code : 'No code available',
-				studentAvatarUrl: profile ? profile.avatar_url : 'No avatar available',
-				academicCycle: academic_cycle ? academic_cycle.name : 'No academic cycle available',
-				academicCycleDescription: academic_cycle ? academic_cycle.description : 'No description available',
-				companyName: company ? company.company_name : 'No company data',
-				companyRUC: company ? company.ruc : 'No RUC available',
-				startDate: start_date ? start_date.toISOString().split('T')[0] : 'No start date',
-				endDate: end_date ? end_date.toISOString().split('T')[0] : 'No end date',
-				internshipStatus: status || 'No status available',
-				internshipPosition: position || 'No position available',
-			};
-		});
-	}
-
 	async getInternshipDetailsByStudentCode(code: string) {
 		const internships = await this.internshipRepository
 			.createQueryBuilder('internship')
