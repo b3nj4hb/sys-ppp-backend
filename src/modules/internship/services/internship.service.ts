@@ -62,4 +62,38 @@ export class InternshipService {
 			};
 		});
 	}
+
+	async updateInternshipStatus(studentCode: string, internshipId: string, status: 'pending' | 'approved' | 'rejected') {
+		const internship = await this.internshipRepository
+			.createQueryBuilder('internship')
+			.leftJoinAndSelect('internship.student', 'student')
+			.leftJoinAndSelect('student.profile', 'profile')
+			.leftJoinAndSelect('internship.company', 'company')
+			.where('profile.code = :code', { code: studentCode })
+			.andWhere('internship.id = :id', { id: internshipId })
+			.getOne();
+
+		if (!internship) {
+			throw new NotFoundException('Internship not found for this student');
+		}
+
+		internship.status = status;
+		const updatedInternship = await this.internshipRepository.save(internship);
+
+		return {
+			student: {
+				code: updatedInternship.student.profile.code,
+				first_name: updatedInternship.student.profile.first_name,
+				last_name: updatedInternship.student.profile.last_name,
+			},
+			company: {
+				company_name: updatedInternship.company.company_name,
+				ruc: updatedInternship.company.ruc,
+			},
+			internship: {
+				id: updatedInternship.id,
+				status: updatedInternship.status,
+			},
+		};
+	}
 }
