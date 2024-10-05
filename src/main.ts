@@ -8,22 +8,23 @@ import { SwaggerModule } from '@nestjs/swagger';
 import { SwaggerConfig } from './config/swagger.config';
 
 async function bootstrap() {
-	const app = await NestFactory.create(AppModule);
+	try {
+		const app = await NestFactory.create(AppModule);
 
-	// enable cors
-	app.enableCors(CORS);
+		app.enableCors(CORS);
 
-	// Serving static files
-	app.use('/public', express.static(join(__dirname, '..', 'public')));
+		app.use('/public', express.static(join(__dirname, '..', 'public')));
 
-	// swagger
-	const document = SwaggerModule.createDocument(app, SwaggerConfig);
-	SwaggerModule.setup('', app, document, { customCssUrl: '/public/swagger-dark.css' });
+		const document = SwaggerModule.createDocument(app, SwaggerConfig);
+		SwaggerModule.setup('', app, document, { customCssUrl: '/public/swagger-dark.css' });
 
-	// dto validations
-	app.useGlobalPipes(new ValidationPipe());
+		app.useGlobalPipes(new ValidationPipe());
 
-	// port config
-	await app.listen(process.env.PORT, '0.0.0.0');
+		await app.listen(process.env.PORT || 3000, '0.0.0.0');
+		console.log(`Application is running on: ${await app.getUrl()}`);
+	} catch (error) {
+		console.error('Error during application bootstrap', error);
+		process.exit(1);
+	}
 }
 bootstrap();

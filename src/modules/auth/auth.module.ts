@@ -6,13 +6,18 @@ import { JwtStrategy } from './jwt.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { ProfileEntity } from '../profile/entities/profile.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
 	imports: [
 		PassportModule,
-		JwtModule.register({
-			secret: process.env.JWT_SECRET,
-			signOptions: { expiresIn: process.env.JWT_EXPIRES_IN },
+		JwtModule.registerAsync({
+			imports: [ConfigModule],
+			inject: [ConfigService],
+			useFactory: async (configService: ConfigService) => ({
+				secret: configService.get<string>('JWT_SECRET'),
+				signOptions: { expiresIn: configService.get<string>('JWT_EXPIRES_IN') },
+			}),
 		}),
 		TypeOrmModule.forFeature([ProfileEntity]),
 	],
