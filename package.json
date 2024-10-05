@@ -44,6 +44,7 @@
 		"reflect-metadata": "^0.2.0",
 		"rxjs": "^7.8.1",
 		"swagger-ui-express": "^5.0.1",
+		"sys-ppp-backend": "file:",
 		"typeorm": "^0.3.20"
 	},
 	"devDependencies": {
