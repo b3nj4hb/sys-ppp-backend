@@ -16,25 +16,31 @@ export class AuthService {
 		private readonly profileRepository: Repository<ProfileEntity>,
 	) {}
 
-	async validateUser(authDto: AuthDto): Promise<any> {
+	async validateUser(authDto: AuthDto): Promise<Omit<Profile, 'password'> | null> {
 		const { email, password } = authDto;
 		const user = await this.findUserByEmail(email);
+
 		if (user && (await bcrypt.compare(password, user.password.replace('$2y$', '$2b$')))) {
 			const { password, ...result } = user;
-			return result;
+			return result as Omit<Profile, 'password'>;
 		}
 		return null;
 	}
 
-	private async findUserByEmail(email: string): Promise<any> {
-		return await this.profileRepository.findOne({
-			where: { email: email },
-		});
+	private async findUserByEmail(email: string): Promise<ProfileEntity | undefined> {
+		try {
+			return await this.profileRepository.findOne({
+				where: { email },
+			});
+		} catch (error) {
+			console.error('Error al buscar un usuario por email:', error);
+			throw new Error('Error al buscar el usuario');
+		}
 	}
 
-	async login(user: Profile): Promise<any> {
-		const { password, ...userWithoutPassword } = user;
-		const payload = { ...userWithoutPassword, sub: user.code };
+	async login(user: Omit<Profile, 'password'>): Promise<{ access_token: string }> {
+		const payload = { ...user, sub: user.code };
+
 		return {
 			access_token: this.jwtService.sign(payload),
 		};
