@@ -45,9 +45,6 @@ export class InternshipService {
 
 			return {
 				internshipId: internship.id,
-				studentCode: code,
-				studentName: profile ? `${profile.first_name || ''} ${profile.middle_name || ''} ${profile.last_name || ''} ${profile.second_last_name || ''}`.trim() : 'No profile data',
-				studentAvatarUrl: profile ? profile.avatar_url : 'No avatar available',
 				companyRepresentative: companyContact.name_representative || 'No representative',
 				companyEmail: companyContact.email || 'No email available',
 				companyPhone: companyContact.phone || 'No phone available',
@@ -58,8 +55,6 @@ export class InternshipService {
 				internshipStartDate: start_date ? start_date.toISOString().split('T')[0] : 'No start date',
 				internshipEndDate: end_date ? end_date.toISOString().split('T')[0] : 'No end date',
 				internshipStatus: status || 'No status available',
-				academicCycle: academic_cycle ? academic_cycle.name : 'No academic cycle available',
-				acadmicCycleDescription: academic_cycle ? academic_cycle.description : 'No description available',
 			};
 		});
 	}
