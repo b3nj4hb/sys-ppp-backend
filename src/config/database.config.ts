@@ -2,7 +2,11 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 import { join } from 'path';
 
-dotenv.config(); // Carga las variables de entorno del archivo .env
+dotenv.config();
+
+if (!process.env.DB_HOST_LOCAL || !process.env.DB_PORT || !process.env.DB_USERNAME || !process.env.DB_PASSWORD || !process.env.DB_NAME) {
+	throw new Error('Faltan una o más variables de entorno necesarias');
+}
 
 const isDropSchema = process.env.DB_DROP === 'true';
 const isSynchronize = process.env.DB_SYNC === 'true';
@@ -15,11 +19,11 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
 	username: process.env.DB_USERNAME,
 	password: process.env.DB_PASSWORD,
 	database: process.env.DB_NAME,
-	entities: [join(__dirname, '/../modules/**/entities/*.entity{.ts,.js}')], // Ruta a tus entidades
-	migrations: [join(__dirname, '/../migrations/*{.ts,.js}')], // Añadir ruta para migraciones
+	entities: [join(__dirname, '/../modules/**/entities/*.entity{.ts,.js}')],
+	migrations: [join(__dirname, '/../migrations/*{.ts,.js}')],
 	dropSchema: isDropSchema,
-	synchronize: false, // Usar migraciones en vez de `synchronize`
+	synchronize: false,
 	ssl: isProduction ? { rejectUnauthorized: true } : undefined,
-	autoLoadEntities: true, // Cargar automáticamente las entidades
-	migrationsRun: true, // Ejecutar migraciones automáticamente al arrancar la app
+	autoLoadEntities: true,
+	migrationsRun: true,
 };
