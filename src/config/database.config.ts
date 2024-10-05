@@ -10,7 +10,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 export const typeOrmConfig: TypeOrmModuleOptions = {
 	type: 'postgres',
-	host: isProduction ? process.env.DB_HOST_CLOUD : process.env.DB_HOST_LOCAL,
+	host: process.env.DB_HOST,
 	port: parseInt(process.env.DB_PORT, 10),
 	username: process.env.DB_USERNAME,
 	password: process.env.DB_PASSWORD,
