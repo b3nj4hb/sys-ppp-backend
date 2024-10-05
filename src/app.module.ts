@@ -10,19 +10,12 @@ import { EvaluationModule } from './modules/evaluation/evaluation.module';
 import { EvaluationStructureModule } from './modules/evaluation-structure/evaluation-structure.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { CompanyModule } from './modules/company/company.module';
+import { InternshipDocumentService } from './modules/internship-document/services/internship-document.service';
+import { InternshipDocumentModule } from './modules/internship-document/internship-document.module';
 
 @Module({
-	imports: [
-		TypeOrmModule.forRoot(typeOrmConfig),
-		ProfileModule,
-		StudentModule,
-		InternshipModule,
-		EvaluationModule,
-		EvaluationStructureModule,
-		AuthModule,
-		CompanyModule,
-	],
+	imports: [TypeOrmModule.forRoot(typeOrmConfig), ProfileModule, StudentModule, InternshipModule, EvaluationModule, EvaluationStructureModule, AuthModule, CompanyModule, InternshipDocumentModule],
 	controllers: [AppController],
-	providers: [AppService],
+	providers: [AppService, InternshipDocumentService],
 })
 export class AppModule {}
