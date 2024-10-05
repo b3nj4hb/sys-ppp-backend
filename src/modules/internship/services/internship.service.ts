@@ -44,6 +44,7 @@ export class InternshipService {
 			const { profile, academic_cycle } = internship.student || {};
 
 			return {
+				internshipId: internship.id,
 				studentCode: code,
 				studentName: profile ? `${profile.first_name || ''} ${profile.middle_name || ''} ${profile.last_name || ''} ${profile.second_last_name || ''}`.trim() : 'No profile data',
 				studentAvatarUrl: profile ? profile.avatar_url : 'No avatar available',

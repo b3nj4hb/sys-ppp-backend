@@ -16,6 +16,6 @@ import { InternshipDocumentModule } from './modules/internship-document/internsh
 @Module({
 	imports: [TypeOrmModule.forRoot(typeOrmConfig), ProfileModule, StudentModule, InternshipModule, EvaluationModule, EvaluationStructureModule, AuthModule, CompanyModule, InternshipDocumentModule],
 	controllers: [AppController],
-	providers: [AppService, InternshipDocumentService],
+	providers: [AppService],
 })
 export class AppModule {}
