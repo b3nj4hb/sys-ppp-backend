@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProfileEntity } from 'src/modules/profile/entities/profile.entity';
 import { Repository } from 'typeorm';
@@ -21,7 +21,6 @@ export class InternshipDocumentService {
 		const studentProfile = await this.profileRepository.findOne({ where: { code } });
 
 		if (!studentProfile) {
-			console.log('Student not found with code:', code);
 			throw new Error('Student not found');
 		}
 
@@ -31,25 +30,42 @@ export class InternshipDocumentService {
 		});
 
 		if (!student) {
-			console.log('Student entity not found with profile id:', studentProfile.id);
 			throw new Error('Student entity not found');
 		}
-
-		console.log('Found student:', student);
 
 		// Busca los documentos asociados al internship
 		const internshipDocuments = await this.internshipDocumentRepository
 			.createQueryBuilder('internshipDocument')
 			.innerJoinAndSelect('internshipDocument.document', 'document')
 			.innerJoin('internshipDocument.internship', 'internship')
-			.innerJoin('internship.student', 'student') // Asegura la relación con el estudiante
+			.innerJoin('internship.student', 'student')
 			.where('internship.id = :internshipId', { internshipId })
-			.andWhere('student.id = :studentId', { studentId: student.id }) // Asegura que esté relacionado con el studentId
-			.select(['internshipDocument.approval_status', 'document.title', 'document.description', 'document.file_url'])
+			.andWhere('student.id = :studentId', { studentId: student.id })
+			.select(['document.id', 'internshipDocument.approval_status', 'document.title', 'document.description', 'document.file_url'])
 			.getMany();
 
-		console.log('Found documents:', internshipDocuments);
-
 		return internshipDocuments;
+	}
+
+	async updateDocumentStatus(documentId: string, status: 'pending' | 'approved' | 'rejected') {
+		console.log('Updating document status for documentId:', documentId, 'with status:', status);
+
+		const internshipDocument = await this.internshipDocumentRepository
+			.createQueryBuilder('internshipDocument')
+			.leftJoinAndSelect('internshipDocument.document', 'document') // Asegurarse de incluir el documento
+			.where('internshipDocument.document_id = :documentId', { documentId }) // Verificar el ID del documento
+			.getOne();
+
+		if (!internshipDocument) {
+			throw new NotFoundException('Internship document not found');
+		}
+
+		internshipDocument.approval_status = status;
+		const updatedDocument = await this.internshipDocumentRepository.save(internshipDocument);
+
+		return {
+			title: updatedDocument.document.title, // Incluir el título del documento
+			approval_status: updatedDocument.approval_status,
+		};
 	}
 }
