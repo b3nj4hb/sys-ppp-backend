@@ -32,7 +32,5 @@ export class ProfileEntity extends BaseEntity implements Profile {
 
 	@OneToOne(() => StudentEntity, (student) => student.profile)
 	student: StudentEntity;
-	@OneToMany(() => DocumentEntity, (document) => document.profile)
-	document: DocumentEntity[];
 	evaluation: EvaluationEntity[];
 }

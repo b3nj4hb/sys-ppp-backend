@@ -64,7 +64,6 @@ export class InternshipDocumentService {
 		const updatedDocument = await this.internshipDocumentRepository.save(internshipDocument);
 
 		return {
-			title: updatedDocument.document.title, // Incluir el título del documento
 			approval_status: updatedDocument.approval_status,
 		};
 	}
