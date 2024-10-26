@@ -1,7 +1,10 @@
 import { DataSource } from 'typeorm';
 import { join } from 'path';
+import { config } from 'dotenv';
 
-if (!process.env.DB_HOST || !process.env.DB_PORT || !process.env.DB_USERNAME || !process.env.DB_PASSWORD || !process.env.DB_NAME) {
+config(); // Carga las variables de entorno desde un archivo .env
+
+if (!process.env.DB_HOST_CLOUD || !process.env.DB_HOST_LOCAL || !process.env.DB_PORT || !process.env.DB_USERNAME || !process.env.DB_PASSWORD || !process.env.DB_NAME) {
 	throw new Error('Faltan una o más variables de entorno necesarias');
 }
 
