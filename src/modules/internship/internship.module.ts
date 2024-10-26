@@ -9,9 +9,7 @@ import { ProfileEntity } from '../profile/entities/profile.entity';
 import { AcademicCycleEntity } from '../student/entities/academic_cycle.entity';
 
 @Module({
-	imports: [
-		TypeOrmModule.forFeature([InternshipEntity, CompanyEntity, StudentEntity, ProfileEntity, AcademicCycleEntity]), // Añade StudentEntity aquí
-	],
+	imports: [TypeOrmModule.forFeature([InternshipEntity, CompanyEntity, StudentEntity, ProfileEntity, AcademicCycleEntity])],
 	providers: [InternshipService],
 	controllers: [InternshipController],
 })
