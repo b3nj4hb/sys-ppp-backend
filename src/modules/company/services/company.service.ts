@@ -5,7 +5,7 @@ import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { CompanyEntity } from '../entities/company.entity';
 import { CompanyDto } from '../dto/company.dto';
-import { CompanyContactDto, PartialCompanyContactDto, RemainingCompanyContactDto } from '../dto/company-contact.dto';
+import { BasicCompanyContactDto, CompanyContactDto, InfoCompanyContactDto } from '../dto/company-contact.dto';
 import { CompanyContactEntity } from '../entities/company-contact.entity';
 
 @Injectable()
@@ -14,7 +14,7 @@ export class CompanyService {
 		private readonly httpService: HttpService,
 		@InjectRepository(CompanyEntity)
 		private readonly companyRepository: Repository<CompanyEntity>,
-		@InjectRepository(CompanyEntity)
+		@InjectRepository(CompanyContactEntity)
 		private readonly companyContactRepository: Repository<CompanyContactEntity>,
 	) {}
 
@@ -53,7 +53,10 @@ export class CompanyService {
 			throw new NotFoundException('Person details not found');
 		}
 
-		return this.partialContactDto(response.data);
+		return {
+			message: 'Person details found, using external API',
+			person_details: this.partialContactDto(response.data),
+		};
 	}
 
 	async validateCompanyByRUC(ruc: string): Promise<boolean> {
@@ -75,11 +78,8 @@ export class CompanyService {
 		} as any;
 	}
 
-	async createCompanyContact(partialCompanyContactDto: PartialCompanyContactDto, remainingCompanyContactDto: RemainingCompanyContactDto): Promise<CompanyContactEntity> {
-		const newCompanyContact = this.companyContactRepository.create({
-			...partialCompanyContactDto,
-			...remainingCompanyContactDto,
-		});
+	async createCompanyContact(CompanyContactDto: CompanyContactDto): Promise<CompanyEntity> {
+		const newCompanyContact = this.companyContactRepository.create(CompanyContactDto);
 		const savedCompanyContact = await this.companyContactRepository.save(newCompanyContact);
 		return {
 			message: 'Company contact created',
@@ -97,11 +97,11 @@ export class CompanyService {
 		return companyDto;
 	}
 
-	private partialContactDto(apiResponse: any): PartialCompanyContactDto {
+	private partialContactDto(apiResponse: any): BasicCompanyContactDto {
 		const partialDto = new CompanyContactDto();
-		partialDto.first_name = apiResponse.nombres;
-		partialDto.last_name_father = apiResponse.apellidoPaterno;
-		partialDto.last_name_mother = apiResponse.apellidoMaterno;
+		partialDto.names = apiResponse.nombres;
+		partialDto.lastname = apiResponse.apellidoPaterno;
+		partialDto.second_lastname = apiResponse.apellidoMaterno;
 		partialDto.dni = apiResponse.dni;
 		return partialDto;
 	}
@@ -113,7 +113,10 @@ export class CompanyService {
 
 	async getCompanyContactByDNI(dni: string): Promise<CompanyContactEntity | null> {
 		const companyContact = await this.companyContactRepository.createQueryBuilder('company_contact').where('company_contact.dni = :dni', { dni }).getOne();
-		return companyContact || null;
+		return {
+			message: companyContact ? 'Company contact found' : 'Company contact not found',
+			company_contact: companyContact || null,
+		} as any;
 	}
 
 	async processCompanyByRUC(ruc: string): Promise<CompanyEntity> {
@@ -130,21 +133,14 @@ export class CompanyService {
 		return await this.createCompany(companyDetails);
 	}
 
-	async processCompanyContactByDNI(dni: string): Promise<CompanyContactEntity> {
+	async getCompanyContactData(dni: string): Promise<any> {
 		const doesCompanyContactExist = await this.validateCompanyContactByDNI(dni);
 
-		let partialContact: PartialCompanyContactDto;
 		if (doesCompanyContactExist) {
-			let data = await this.getPersonDetailsByDNI(dni);
-			partialContact = data;
-			return {
-				message: 'Company contact exists',
-				company_contact: data,
-			} as any;
+			return await this.getCompanyContactByDNI(dni);
 		}
 
 		const companyContactDetails = await this.getPersonDetailsByDNI(dni);
-
-		// return await this.createCompanyContact(partialContact,);
+		return companyContactDetails;
 	}
 }

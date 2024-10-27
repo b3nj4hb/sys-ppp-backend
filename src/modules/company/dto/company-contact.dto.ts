@@ -1,74 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsEmail, IsPhoneNumber } from 'class-validator';
+import { IsString, IsNotEmpty, IsEmail, IsPhoneNumber, IsUUID } from 'class-validator';
+import { PickType } from '@nestjs/swagger';
 
 export class CompanyContactDto {
 	@ApiProperty({
-		description: 'First name of the representative',
-		example: 'John',
-	})
-	@IsNotEmpty()
-	@IsString()
-	first_name: string;
-
-	@ApiProperty({
-		description: "Father's last name of the representative",
-		example: 'Doe',
-	})
-	@IsNotEmpty()
-	@IsString()
-	last_name_father: string;
-
-	@ApiProperty({
-		description: "Mother's last name of the representative",
-		example: 'Smith',
-	})
-	@IsNotEmpty()
-	@IsString()
-	last_name_mother: string;
-
-	@ApiProperty({
-		description: 'Academic degree of the representative',
-		example: 'PhD in Computer Science',
-	})
-	@IsNotEmpty()
-	@IsString()
-	academic_degree: string;
-
-	@ApiProperty({
-		description: 'Position of the representative',
-		example: 'Chief Technology Officer',
-	})
-	@IsNotEmpty()
-	@IsString()
-	position_representative: string;
-
-	@ApiProperty({
-		description: 'Phone number of the representative',
-		example: '+1234567890',
-	})
-	@IsNotEmpty()
-	@IsPhoneNumber()
-	phone: string;
-
-	@ApiProperty({
-		description: 'Email of the representative',
-		example: 'johndoe@example.com',
-	})
-	@IsNotEmpty()
-	@IsEmail()
-	email: string;
-
-	@ApiProperty({
-		description: 'DNI of the representative',
-		example: '12345678',
-	})
-	@IsNotEmpty()
-	@IsString()
-	dni: string;
-}
-
-export class PartialCompanyContactDto implements Pick<CompanyContactDto, 'dni' | 'first_name' | 'last_name_father' | 'last_name_mother'> {
-	@ApiProperty({
 		description: 'DNI of the representative',
 		example: '12345678',
 	})
@@ -77,60 +12,69 @@ export class PartialCompanyContactDto implements Pick<CompanyContactDto, 'dni' |
 	dni: string;
 
 	@ApiProperty({
-		description: 'First name of the representative',
-		example: 'John',
+		description: 'Names of the representative',
+		example: 'John Doe',
 	})
 	@IsNotEmpty()
 	@IsString()
-	first_name: string;
+	names: string;
 
 	@ApiProperty({
-		description: "Father's last name of the representative",
+		description: 'Last name of the representative',
 		example: 'Doe',
 	})
 	@IsNotEmpty()
 	@IsString()
-	last_name_father: string;
+	lastname: string;
 
 	@ApiProperty({
-		description: "Mother's last name of the representative",
+		description: 'Second last name of the representative',
 		example: 'Smith',
 	})
 	@IsNotEmpty()
 	@IsString()
-	last_name_mother: string;
-}
+	second_lastname: string;
 
-export class RemainingCompanyContactDto implements Omit<CompanyContactDto, 'dni' | 'first_name' | 'last_name_father' | 'last_name_mother'> {
 	@ApiProperty({
 		description: 'Academic degree of the representative',
 		example: 'PhD in Computer Science',
+		nullable: true,
 	})
-	@IsNotEmpty()
 	@IsString()
-	academic_degree: string;
+	academic_degree?: string;
 
 	@ApiProperty({
 		description: 'Position of the representative',
 		example: 'Chief Technology Officer',
+		nullable: true,
 	})
-	@IsNotEmpty()
 	@IsString()
-	position_representative: string;
+	position_representative?: string;
 
 	@ApiProperty({
 		description: 'Phone number of the representative',
 		example: '+1234567890',
+		nullable: true,
 	})
-	@IsNotEmpty()
-	@IsPhoneNumber()
-	phone: string;
+	@IsString()
+	phone?: string;
 
 	@ApiProperty({
 		description: 'Email of the representative',
 		example: 'johndoe@example.com',
+		nullable: true,
+	})
+	@IsEmail()
+	email?: string;
+
+	@ApiProperty({
+		description: 'UUID of the company',
+		example: '550e8400-e29b-41d4-a716-446655440000',
 	})
 	@IsNotEmpty()
-	@IsEmail()
-	email: string;
+	@IsUUID()
+	company_id?: string;
 }
+
+export class BasicCompanyContactDto extends PickType(CompanyContactDto, ['dni', 'names', 'lastname', 'second_lastname'] as const) {}
+export class InfoCompanyContactDto extends PickType(CompanyContactDto, ['academic_degree', 'position_representative', 'phone', 'email'] as const) {}
