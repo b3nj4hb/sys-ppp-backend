@@ -31,4 +31,20 @@ export class CompanyController {
 			throw new NotFoundException(error.message);
 		}
 	}
+
+	@UseGuards(JwtAuthGuard)
+	@Get('get-person-remote/:dni')
+	async getPersonDetailsByDNI(@Param('dni') dni: string) {
+		return this.companyService.getPersonDetailsByDNI(dni);
+	}
+
+	@UseGuards(JwtAuthGuard)
+	@Get('get-contact/:dni')
+	async getCompanyContactByDNI(@Param('dni') dni: string) {
+		try {
+			return await this.companyService.getCompanyContactByDNI(dni);
+		} catch (error) {
+			throw new NotFoundException(error.message);
+		}
+	}
 }

@@ -5,7 +5,11 @@ import { BaseEntity } from 'src/config/base.entity';
 @Entity({ name: 'company_contact' })
 export class CompanyContactEntity extends BaseEntity {
 	@Column()
-	name_representative: string;
+	first_name: string;
+	@Column()
+	last_name_father: string;
+	@Column()
+	last_name_mother: string;
 	@Column()
 	academic_degree: string;
 	@Column()
@@ -14,6 +18,8 @@ export class CompanyContactEntity extends BaseEntity {
 	phone: string;
 	@Column()
 	email: string;
+	@Column()
+	dni: string;
 
 	@ManyToOne(() => CompanyEntity, (company) => company.company_contact)
 	@JoinColumn({ name: 'company_id' })
