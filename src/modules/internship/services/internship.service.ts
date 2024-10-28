@@ -2,17 +2,17 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { StudentEntity } from 'src/modules/student/entities/student.entity';
-import { Student } from 'src/modules/student/interfaces/student.interface';
 import { ProfileEntity } from 'src/modules/profile/entities/profile.entity';
 import { AcademicCycleEntity } from 'src/modules/student/entities/academic_cycle.entity';
 import { CompanyEntity } from '../../company/entities/company.entity';
 import { InternshipEntity } from '../entities/internship.entity';
+import { InternshipDto } from '../dto/internship.dto';
 
 @Injectable()
 export class InternshipService {
 	constructor(
 		@InjectRepository(StudentEntity)
-		private readonly studentRepository: Repository<Student>,
+		private readonly studentRepository: Repository<StudentEntity>,
 		@InjectRepository(ProfileEntity)
 		private readonly profileRepository: Repository<ProfileEntity>,
 		@InjectRepository(AcademicCycleEntity)
@@ -89,6 +89,88 @@ export class InternshipService {
 			internship: {
 				id: updatedInternship.id,
 				status: updatedInternship.status,
+			},
+		};
+	}
+
+	async getStudentIdByProfileCode(profileCode: string): Promise<any> {
+		const student = await this.studentRepository.createQueryBuilder('student').leftJoinAndSelect('student.profile', 'profile').where('profile.code = :code', { code: profileCode }).getOne();
+
+		if (!student) {
+			throw new NotFoundException('Student not found for this profile code');
+		}
+
+		return {
+			id: student.id,
+			profile: {
+				code: student.profile.code,
+			},
+		};
+	}
+
+	async hasPendingInternship(profileCode: string): Promise<boolean> {
+		const internships = await this.internshipRepository
+			.createQueryBuilder('internship')
+			.leftJoinAndSelect('internship.student', 'student')
+			.leftJoinAndSelect('student.profile', 'profile')
+			.where('profile.code = :code', { code: profileCode })
+			.andWhere('internship.status = :status', { status: 'pending' })
+			.getMany();
+
+		return internships.length > 0 ? true : false;
+	}
+
+	async createInternship(internshipDto: InternshipDto) {
+		const { student_code, companyId, position, start_date, end_date, description } = internshipDto;
+
+		const student = await this.getStudentIdByProfileCode(student_code);
+
+		if (!student) {
+			throw new NotFoundException('Student not found for this ID');
+		}
+
+		const hasPending = await this.hasPendingInternship(student_code);
+		if (hasPending) {
+			throw new Error('You have a pending internship');
+		}
+
+		const company = await this.companyRepository.findOne({ where: { id: companyId } });
+
+		if (!company) {
+			throw new NotFoundException('Company not found');
+		}
+
+		const internship = this.internshipRepository.create({
+			student,
+			company,
+			position,
+			start_date,
+			end_date,
+			description,
+			status: 'pending',
+		});
+
+		await this.internshipRepository.save(internship);
+
+		return {
+			message: 'Internship created successfully',
+			student: {
+				code: student.profile.code,
+				first_name: student.profile.first_name,
+				last_name: student.profile.last_name,
+			},
+			company: {
+				company_name: company.company_name,
+				ruc: company.ruc,
+			},
+			internship: {
+				internshipId: internship.id,
+				position: internship.position,
+				start_date: internship.start_date,
+				end_date: internship.end_date,
+				description: internship.description,
+				hours: internship.hours,
+				status: internship.status,
 			},
 		};
 	}

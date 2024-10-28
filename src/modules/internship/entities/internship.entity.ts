@@ -16,7 +16,7 @@ export class InternshipEntity extends BaseEntity implements Internship {
 	position: string;
 	@Column()
 	description: string;
-	@Column()
+	@Column({ nullable: true })
 	hours: number;
 	@Column({ type: 'enum', enum: ['pending', 'approved', 'rejected'], default: 'pending' })
 	status: 'pending' | 'approved' | 'rejected';
