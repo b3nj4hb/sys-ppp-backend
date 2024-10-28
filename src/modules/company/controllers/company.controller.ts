@@ -68,4 +68,14 @@ export class CompanyController {
 			throw new NotFoundException(error.message);
 		}
 	}
+
+	@UseGuards(JwtAuthGuard)
+	@Patch('update-contact/:dni')
+	async updateCompanyContact(@Param('dni') dni: string, @Body() updateData: Partial<CompanyContactDto>) {
+		try {
+			return await this.companyService.updateCompanyContact(dni, updateData);
+		} catch (error) {
+			throw new NotFoundException(error.message);
+		}
+	}
 }

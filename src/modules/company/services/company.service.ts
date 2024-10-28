@@ -78,12 +78,35 @@ export class CompanyService {
 		} as any;
 	}
 
+	//TODO: Manejar si el contacto ya existe
 	async createCompanyContact(CompanyContactDto: CompanyContactDto): Promise<CompanyEntity> {
+		const doesCompanyContactExist = await this.validateCompanyContactByDNI(CompanyContactDto.dni);
+
+		if (doesCompanyContactExist) {
+			throw new Error('Company contact already exists');
+		}
+
 		const newCompanyContact = this.companyContactRepository.create(CompanyContactDto);
 		const savedCompanyContact = await this.companyContactRepository.save(newCompanyContact);
 		return {
 			message: 'Company contact created',
 			company_contact: savedCompanyContact,
+		} as any;
+	}
+
+	async updateCompanyContact(dni: string, updateData: Partial<CompanyContactDto>): Promise<CompanyContactEntity> {
+		const companyContact = await this.companyContactRepository.findOne({ where: { dni } });
+
+		if (!companyContact) {
+			throw new NotFoundException('Company contact not found');
+		}
+
+		Object.assign(companyContact, updateData);
+		const updatedCompanyContact = await this.companyContactRepository.save(companyContact);
+
+		return {
+			message: 'Company contact updated',
+			company_contact: updatedCompanyContact,
 		} as any;
 	}
 
