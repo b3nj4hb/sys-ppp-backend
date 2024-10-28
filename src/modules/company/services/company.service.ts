@@ -78,15 +78,22 @@ export class CompanyService {
 		} as any;
 	}
 
-	//TODO: Manejar si el contacto ya existe
-	async createCompanyContact(CompanyContactDto: CompanyContactDto): Promise<CompanyEntity> {
-		const doesCompanyContactExist = await this.validateCompanyContactByDNI(CompanyContactDto.dni);
+	async createCompanyContact(companyContactDto: CompanyContactDto): Promise<CompanyContactEntity> {
+		const doesCompanyContactExist = await this.validateCompanyContactByDNI(companyContactDto.dni);
 
 		if (doesCompanyContactExist) {
 			throw new Error('Company contact already exists');
 		}
 
-		const newCompanyContact = this.companyContactRepository.create(CompanyContactDto);
+		const company = await this.companyRepository.findOne({ where: { id: companyContactDto.company_id } });
+		if (!company) {
+			throw new NotFoundException('Company not found');
+		}
+
+		const newCompanyContact = this.companyContactRepository.create({
+			...companyContactDto,
+			company,
+		});
 		const savedCompanyContact = await this.companyContactRepository.save(newCompanyContact);
 		return {
 			message: 'Company contact created',
@@ -129,27 +136,33 @@ export class CompanyService {
 		return partialDto;
 	}
 
-	async getCompanyByRUC(ruc: string): Promise<CompanyEntity | null> {
-		const company = await this.companyRepository.createQueryBuilder('company').where('company.ruc = :ruc', { ruc }).getOne();
-		return company || null;
+	async getCompanyByRUC(ruc: string): Promise<any> {
+		const company = await this.companyRepository.createQueryBuilder('company').leftJoinAndSelect('company.company_contact', 'company_contact').where('company.ruc = :ruc', { ruc }).getOne();
+
+		return {
+			message: company ? 'Company found' : 'Company not found',
+			company: company || null,
+		} as any;
 	}
 
 	async getCompanyContactByDNI(dni: string): Promise<CompanyContactEntity | null> {
-		const companyContact = await this.companyContactRepository.createQueryBuilder('company_contact').where('company_contact.dni = :dni', { dni }).getOne();
+		const companyContact = await this.companyContactRepository
+			.createQueryBuilder('company_contact')
+			.leftJoinAndSelect('company_contact.company', 'company')
+			.where('company_contact.dni = :dni', { dni })
+			.getOne();
+
 		return {
 			message: companyContact ? 'Company contact found' : 'Company contact not found',
 			company_contact: companyContact || null,
 		} as any;
 	}
 
-	async processCompanyByRUC(ruc: string): Promise<CompanyEntity> {
+	async processCompanyByRUC(ruc: string): Promise<any> {
 		const doesCompanyExist = await this.validateCompanyByRUC(ruc);
 
 		if (doesCompanyExist) {
-			return {
-				message: 'Company exists',
-				company: await this.getCompanyByRUC(ruc),
-			} as any;
+			return await this.getCompanyByRUC(ruc);
 		}
 
 		const companyDetails = await this.getCompanyDetailsByRUC(ruc);
