@@ -8,21 +8,11 @@ import { InternshipDocumentEntity } from './internship-document.entity';
 @Entity({ name: 'document' })
 export class DocumentEntity extends BaseEntity implements Document {
 	@Column()
-	title: string;
-	@Column()
-	description: string;
-	@Column()
 	file_url: string;
 
-	@ManyToOne(() => ProfileEntity, (profile) => profile.document)
-	@JoinColumn({ name: 'profile_id' })
-	profile: ProfileEntity;
 	@ManyToOne(() => DocumentTypeEntity, (documentType) => documentType.document)
 	@JoinColumn({ name: 'document_type_id' })
 	documentType: DocumentTypeEntity;
-	@OneToMany(
-		() => InternshipDocumentEntity,
-		(internshipDocument) => internshipDocument.document,
-	)
+	@OneToMany(() => InternshipDocumentEntity, (internshipDocument) => internshipDocument.document)
 	internshipDocument: InternshipDocumentEntity;
 }
