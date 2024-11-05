@@ -10,6 +10,7 @@ import { EvaluationStructureModule } from './modules/evaluation-structure/evalua
 import { AuthModule } from './modules/auth/auth.module';
 import { CompanyModule } from './modules/company/company.module';
 import { InternshipDocumentModule } from './modules/internship-document/internship-document.module';
+import { TemplatesModule } from './modules/templates/templates.module';
 
 @Module({
 	imports: [
@@ -25,6 +26,7 @@ import { InternshipDocumentModule } from './modules/internship-document/internsh
 		AuthModule,
 		CompanyModule,
 		InternshipDocumentModule,
+		TemplatesModule,
 	],
 	controllers: [],
 	providers: [],
