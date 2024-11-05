@@ -121,7 +121,7 @@ export class InternshipService {
 	}
 
 	async createInternship(internshipDto: InternshipDto) {
-		const { student_code, companyId, position, start_date, end_date, description } = internshipDto;
+		const { student_code, company_id, position, start_date, end_date, description } = internshipDto;
 
 		const student = await this.getStudentIdByProfileCode(student_code);
 
@@ -134,7 +134,7 @@ export class InternshipService {
 			throw new Error('You have a pending internship');
 		}
 
-		const company = await this.companyRepository.findOne({ where: { id: companyId } });
+		const company = await this.companyRepository.findOne({ where: { id: company_id } });
 
 		if (!company) {
 			throw new NotFoundException('Company not found');
@@ -164,7 +164,7 @@ export class InternshipService {
 				ruc: company.ruc,
 			},
 			internship: {
-				internshipId: internship.id,
+				internship_id: internship.id,
 				position: internship.position,
 				start_date: internship.start_date,
 				end_date: internship.end_date,

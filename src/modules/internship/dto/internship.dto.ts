@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsDateString } from 'class-validator';
+import { IsString, IsNotEmpty, IsDateString, IsUUID } from 'class-validator';
 
 export class InternshipDto {
 	@ApiProperty({
@@ -15,8 +15,8 @@ export class InternshipDto {
 		example: '67890',
 	})
 	@IsNotEmpty()
-	@IsString()
-	companyId: string;
+	@IsUUID()
+	company_id: string;
 
 	@ApiProperty({
 		description: 'Position of the internship',
