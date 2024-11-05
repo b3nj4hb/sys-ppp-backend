@@ -1,9 +1,10 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { CompanyEntity } from './company.entity';
 import { BaseEntity } from 'src/config/base.entity';
+import { CompanyContact } from '../interfaces/company-contact.interface';
 
 @Entity({ name: 'company_contact' })
-export class CompanyContactEntity extends BaseEntity {
+export class CompanyContactEntity extends BaseEntity implements CompanyContact {
 	@Column()
 	dni: string;
 	@Column()

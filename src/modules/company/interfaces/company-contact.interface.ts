@@ -1,5 +1,8 @@
 export interface CompanyContact {
-	name_representative: string;
+	dni: string;
+	names: string;
+	lastname: string;
+	second_lastname: string;
 	academic_degree: string;
 	position_representative: string;
 	phone: string;
