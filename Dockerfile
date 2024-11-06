@@ -5,12 +5,12 @@ WORKDIR /usr/src/app
 # Etapa de instalación de dependencias
 FROM base AS install
 RUN mkdir -p /temp/dev
-COPY package.json bun.lockb /temp/dev/
+COPY package.json /temp/dev/
 RUN cd /temp/dev && bun install --frozen-lockfile
 
 # Instalar solo dependencias de producción
 RUN mkdir -p /temp/prod
-COPY package.json bun.lockb /temp/prod/
+COPY package.json /temp/prod/
 RUN cd /temp/prod && bun install --frozen-lockfile --production
 
 # Copiar node_modules desde la instalación anterior
