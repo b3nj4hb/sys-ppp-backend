@@ -23,7 +23,7 @@ export class InternshipDocumentController {
 		}
 	}
 
-	// @UseGuards(JwtAuthGuard)
+	@UseGuards(JwtAuthGuard)
 	@Patch('status/:internshipDocumentId')
 	async updateDocumentStatus(@Param('internshipDocumentId') internshipDocumentId: string, @Body('status') status: 'pending' | 'approved' | 'rejected') {
 		// Validación básica de los parámetros
