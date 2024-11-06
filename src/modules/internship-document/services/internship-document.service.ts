@@ -36,12 +36,18 @@ export class InternshipDocumentService {
 		// Busca los documentos asociados al internship
 		const internshipDocuments = await this.internshipDocumentRepository
 			.createQueryBuilder('internshipDocument')
-			.innerJoinAndSelect('internshipDocument.document', 'document')
+			.innerJoinAndSelect('internshipDocument.documentType', 'documentType') // Cambiado para reflejar la relación correcta
 			.innerJoin('internshipDocument.internship', 'internship')
 			.innerJoin('internship.student', 'student')
 			.where('internship.id = :internshipId', { internshipId })
 			.andWhere('student.id = :studentId', { studentId: student.id })
-			.select(['document.id', 'internshipDocument.approval_status', 'document.name', 'document.description', 'document.file_url'])
+			.select([
+				'internshipDocument.id', // ID del documento en internship_document
+				'internshipDocument.approval_status', // Estado de aprobación
+				'documentType.name', // Nombre del tipo de documento
+				'documentType.description', // Descripción del tipo de documento
+				'internshipDocument.document_url', // URL del documento
+			])
 			.getMany();
 
 		return internshipDocuments;
