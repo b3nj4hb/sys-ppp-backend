@@ -55,19 +55,21 @@ export class InternshipDocumentService {
 		return internshipDocuments;
 	}
 
-	async updateDocumentStatus(documentId: string, status: 'pending' | 'approved' | 'rejected') {
-		console.log('Updating document status for documentId:', documentId, 'with status:', status);
+	async updateDocumentStatus(internshipDocumentId: string, status: 'pending' | 'approved' | 'rejected') {
+		console.log('Updating document status for internshipDocumentId:', internshipDocumentId, 'with status:', status);
 
+		// Buscar el documento en la tabla `internship_document` usando internshipDocumentId
 		const internshipDocument = await this.internshipDocumentRepository
 			.createQueryBuilder('internshipDocument')
-			.leftJoinAndSelect('internshipDocument.document', 'document') // Asegurarse de incluir el documento
-			.where('internshipDocument.document_id = :documentId', { documentId }) // Verificar el ID del documento
+			.leftJoinAndSelect('internshipDocument.documentType', 'documentType') // Incluye el tipo de documento
+			.where('internshipDocument.id = :internshipDocumentId', { internshipDocumentId }) // Usar el ID de `internship_document`
 			.getOne();
 
 		if (!internshipDocument) {
 			throw new NotFoundException('Internship document not found');
 		}
 
+		// Actualizar el estado de aprobación
 		internshipDocument.approval_status = status;
 		const updatedDocument = await this.internshipDocumentRepository.save(internshipDocument);
 

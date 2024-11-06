@@ -7,7 +7,7 @@ import { JwtAuthGuard } from 'src/modules/auth/jwt-auth.guard';
 
 @Controller('internship-document')
 export class InternshipDocumentController {
-	constructor(private readonly intershipService: InternshipDocumentService) {}
+	constructor(private readonly internshipService: InternshipDocumentService) {}
 
 	@UseGuards(JwtAuthGuard)
 	@Get('student')
@@ -17,21 +17,21 @@ export class InternshipDocumentController {
 			throw new BadRequestException('Missing internship_id or code');
 		}
 		try {
-			return await this.intershipService.getDocumentsByInternshipAndStudent(internshipId, code);
+			return await this.internshipService.getDocumentsByInternshipAndStudent(internshipId, code);
 		} catch (error) {
 			throw new BadRequestException(error.message);
 		}
 	}
 
-	@UseGuards(JwtAuthGuard)
-	@Patch('status/:documentId')
-	async updateDocumentStatus(@Param('documentId') documentId: string, @Body('status') status: 'pending' | 'approved' | 'rejected') {
+	// @UseGuards(JwtAuthGuard)
+	@Patch('status/:internshipDocumentId')
+	async updateDocumentStatus(@Param('internshipDocumentId') internshipDocumentId: string, @Body('status') status: 'pending' | 'approved' | 'rejected') {
 		// Validación básica de los parámetros
 		if (!status) {
 			throw new BadRequestException('Missing status');
 		}
 		try {
-			return await this.intershipService.updateDocumentStatus(documentId, status);
+			return await this.internshipService.updateDocumentStatus(internshipDocumentId, status);
 		} catch (error) {
 			throw new BadRequestException(error.message);
 		}
@@ -51,7 +51,7 @@ export class InternshipDocumentController {
 			throw new BadRequestException('Missing document_type_id');
 		}
 		try {
-			return await this.intershipService.uploadDocument(file, internshipId, documentTypeId);
+			return await this.internshipService.uploadDocument(file, internshipId, documentTypeId);
 		} catch (error) {
 			throw new BadRequestException(error.message);
 		}
