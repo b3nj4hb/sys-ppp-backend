@@ -1,6 +1,6 @@
-import { BaseEntity } from 'src/config/base.entity';
+import { BaseEntity } from '../../../config/base.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
-import { InternshipEntity } from 'src/modules/internship/entities/internship.entity';
+import { InternshipEntity } from '../../internship/entities/internship.entity';
 import { DocumentTypeEntity } from './document-type.entity';
 
 @Entity({ name: 'internship_document' })

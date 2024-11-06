@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ProfileEntity } from 'src/modules/profile/entities/profile.entity';
+import { ProfileEntity } from '../../profile/entities/profile.entity';
 import { Repository } from 'typeorm';
 import { InternshipDocumentEntity } from '../entities/internship-document.entity';
-import { StudentEntity } from 'src/modules/student/entities/student.entity';
+import { StudentEntity } from '../../student/entities/student.entity';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
-import { R2Client } from 'src/config/cloudflare-r2.config';
+import { R2Client } from '../../../config/cloudflare-r2.config';
 
 @Injectable()
 export class InternshipDocumentService {

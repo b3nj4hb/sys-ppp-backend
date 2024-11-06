@@ -1,6 +1,6 @@
 import { Body, Controller, Get, NotFoundException, Param, Patch, UseGuards } from '@nestjs/common';
 import { InternshipService } from '../services/internship.service';
-import { JwtAuthGuard } from 'src/modules/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
 import { Post } from '@nestjs/common';
 import { InternshipDto } from '../dto/internship.dto';
 

@@ -1,5 +1,5 @@
-import { BaseEntity } from 'src/config/base.entity';
-import { EvaluationEntity } from 'src/modules/evaluation/entities/evaluation.entity';
+import { BaseEntity } from '../../../config/base.entity';
+import { EvaluationEntity } from '../../evaluation/entities/evaluation.entity';
 import { EvaluationStructure } from '../interfaces/evaluation-structure.interface';
 import { Column, Entity, OneToMany } from 'typeorm';
 import { DimensionStructureEntity } from './dimension-structure.entity';

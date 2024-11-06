@@ -1,9 +1,9 @@
 import { BadRequestException, Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { InternshipDocumentService } from '../services/internship-document.service';
-import { JwtAuthGuard } from 'src/modules/auth/jwt-auth.guard';
 import { Body, Patch } from '@nestjs/common';
 import { Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { JwtAuthGuard } from 'src/modules/auth/jwt-auth.guard';
 
 @Controller('internship-document')
 export class InternshipDocumentController {

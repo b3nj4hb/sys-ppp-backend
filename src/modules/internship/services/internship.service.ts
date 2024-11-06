@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { StudentEntity } from 'src/modules/student/entities/student.entity';
-import { ProfileEntity } from 'src/modules/profile/entities/profile.entity';
-import { AcademicCycleEntity } from 'src/modules/student/entities/academic_cycle.entity';
+import { StudentEntity } from '../../student/entities/student.entity';
+import { ProfileEntity } from '../../profile/entities/profile.entity';
+import { AcademicCycleEntity } from '../../student/entities/academic_cycle.entity';
 import { CompanyEntity } from '../../company/entities/company.entity';
 import { InternshipEntity } from '../entities/internship.entity';
 import { InternshipDto } from '../dto/internship.dto';

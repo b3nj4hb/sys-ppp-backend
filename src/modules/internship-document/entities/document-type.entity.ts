@@ -1,4 +1,4 @@
-import { BaseEntity } from 'src/config/base.entity';
+import { BaseEntity } from '../../../config/base.entity';
 import { DocumentType } from '../interfaces/document-type.interface';
 import { Column, Entity, OneToMany } from 'typeorm';
 import { InternshipDocumentEntity } from './internship-document.entity';

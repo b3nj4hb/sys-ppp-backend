@@ -1,4 +1,4 @@
-import { BaseEntity } from 'src/config/base.entity';
+import { BaseEntity } from '../../../config/base.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
 import { AcademicCycle } from '../interfaces/academic_cycle.interface';
 import { StudentEntity } from './student.entity';

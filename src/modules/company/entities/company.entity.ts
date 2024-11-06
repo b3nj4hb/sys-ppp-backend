@@ -2,7 +2,7 @@ import { Column, Entity, OneToMany } from 'typeorm';
 import { InternshipEntity } from '../../internship/entities/internship.entity';
 import { CompanyContactEntity } from './company-contact.entity';
 import { Company } from '../interfaces/company.interface';
-import { BaseEntity } from 'src/config/base.entity';
+import { BaseEntity } from '../../../config/base.entity';
 
 @Entity({ name: 'company' })
 export class CompanyEntity extends BaseEntity implements Company {

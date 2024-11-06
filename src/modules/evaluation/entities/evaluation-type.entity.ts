@@ -1,4 +1,4 @@
-import { BaseEntity } from 'src/config/base.entity';
+import { BaseEntity } from '../../../config/base.entity';
 import { EvaluationEntity } from './evaluation.entity';
 import { EvaluationType } from '../interfaces/evaluation-type.interface';
 import { Column, Entity, OneToMany } from 'typeorm';

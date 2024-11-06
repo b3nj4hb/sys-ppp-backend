@@ -1,4 +1,4 @@
-import { BaseEntity } from 'src/config/base.entity';
+import { BaseEntity } from '../../../config/base.entity';
 import { Column, Entity } from 'typeorm';
 import { Templates } from '../interfaces/templates.interface';
 

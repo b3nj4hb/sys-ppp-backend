@@ -1,6 +1,6 @@
-import { BaseEntity } from 'src/config/base.entity';
+import { BaseEntity } from '../../../config/base.entity';
 import { QuestionEvaluation } from '../interfaces/question-evaluation.interface';
-import { QuestionStructureEntity } from 'src/modules/evaluation-structure/entities/question-structure.entity';
+import { QuestionStructureEntity } from '../../evaluation-structure/entities/question-structure.entity';
 import { DimensionEvaluationEntity } from './dimension-evaluation.entity';
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 

@@ -1,6 +1,6 @@
-import { EvaluationStructureEntity } from 'src/modules/evaluation-structure/entities/evaluation-structure.entity';
-import { InternshipEntity } from 'src/modules/internship/entities/internship.entity';
-import { ProfileEntity } from 'src/modules/profile/entities/profile.entity';
+import { EvaluationStructureEntity } from '../../evaluation-structure/entities/evaluation-structure.entity';
+import { InternshipEntity } from '../../internship/entities/internship.entity';
+import { ProfileEntity } from '../../profile/entities/profile.entity';
 import { EvaluationTypeEntity } from '../entities/evaluation-type.entity';
 
 export interface Evaluation {

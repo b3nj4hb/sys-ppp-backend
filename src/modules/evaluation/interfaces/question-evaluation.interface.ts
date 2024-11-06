@@ -1,4 +1,4 @@
-import { QuestionStructureEntity } from 'src/modules/evaluation-structure/entities/question-structure.entity';
+import { QuestionStructureEntity } from '../../evaluation-structure/entities/question-structure.entity';
 import { DimensionEvaluationEntity } from '../entities/dimension-evaluation.entity';
 
 export interface QuestionEvaluation {

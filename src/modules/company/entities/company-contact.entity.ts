@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { CompanyEntity } from './company.entity';
-import { BaseEntity } from 'src/config/base.entity';
+import { BaseEntity } from '../../../config/base.entity';
 import { CompanyContact } from '../interfaces/company-contact.interface';
 
 @Entity({ name: 'company_contact' })

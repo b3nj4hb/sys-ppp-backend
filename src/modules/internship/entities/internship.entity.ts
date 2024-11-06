@@ -1,10 +1,10 @@
-import { BaseEntity } from 'src/config/base.entity';
+import { BaseEntity } from '../../../config/base.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { Internship } from '../interfaces/internship.interface';
-import { StudentEntity } from 'src/modules/student/entities/student.entity';
+import { StudentEntity } from '../../student/entities/student.entity';
 import { CompanyEntity } from '../../company/entities/company.entity';
-import { InternshipDocumentEntity } from 'src/modules/internship-document/entities/internship-document.entity';
-import { EvaluationEntity } from 'src/modules/evaluation/entities/evaluation.entity';
+import { InternshipDocumentEntity } from '../../internship-document/entities/internship-document.entity';
+import { EvaluationEntity } from '../../evaluation/entities/evaluation.entity';
 
 @Entity({ name: 'internship' })
 export class InternshipEntity extends BaseEntity implements Internship {

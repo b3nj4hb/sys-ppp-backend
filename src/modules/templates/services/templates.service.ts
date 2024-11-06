@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { TemplatesEntity } from '../entities/templates.entity';
 import { TemplateDto } from '../dto/templates.dto';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
-import { R2Client } from 'src/config/cloudflare-r2.config';
+import { R2Client } from '../../../config/cloudflare-r2.config';
 
 @Injectable()
 export class TemplatesService {

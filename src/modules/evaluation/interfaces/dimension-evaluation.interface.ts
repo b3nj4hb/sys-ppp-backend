@@ -1,4 +1,4 @@
-import { DimensionStructureEntity } from 'src/modules/evaluation-structure/entities/dimension-structure.entity';
+import { DimensionStructureEntity } from '../../evaluation-structure/entities/dimension-structure.entity';
 import { EvaluationEntity } from '../entities/evaluation.entity';
 
 export interface DimensionEvaluation {

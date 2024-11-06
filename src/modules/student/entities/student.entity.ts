@@ -1,8 +1,8 @@
-import { BaseEntity } from 'src/config/base.entity';
+import { BaseEntity } from '../../../config/base.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from 'typeorm';
 import { Student } from '../interfaces/student.interface';
-import { InternshipEntity } from 'src/modules/internship/entities/internship.entity';
-import { ProfileEntity } from 'src/modules/profile/entities/profile.entity';
+import { InternshipEntity } from '../../internship/entities/internship.entity';
+import { ProfileEntity } from '../../profile/entities/profile.entity';
 import { AcademicCycleEntity } from './academic_cycle.entity';
 
 @Entity({ name: 'student' })
