@@ -1,6 +1,5 @@
 import { BadRequestException, Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { InternshipDocumentService } from '../services/internship-document.service';
-import { JwtAuthGuard } from 'src/modules/auth/jwt-auth.guard';
 import { Body, Patch } from '@nestjs/common';
 
 @Controller('internship-document')

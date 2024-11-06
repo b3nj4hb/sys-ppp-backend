@@ -1,8 +1,8 @@
-import { BaseEntity } from 'src/config/base.entity';
+import { BaseEntity } from '../../../config/base.entity';
 import { Column, Entity, OneToMany, OneToOne } from 'typeorm';
 import { Profile } from '../interfaces/profile.interface';
-import { EvaluationEntity } from 'src/modules/evaluation/entities/evaluation.entity';
-import { StudentEntity } from 'src/modules/student/entities/student.entity';
+import { EvaluationEntity } from '../../evaluation/entities/evaluation.entity';
+import { StudentEntity } from '../../student/entities/student.entity';
 
 @Entity({ name: 'profile' })
 export class ProfileEntity extends BaseEntity implements Profile {

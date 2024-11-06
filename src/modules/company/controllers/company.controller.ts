@@ -1,6 +1,6 @@
 import { Body, Controller, Get, NotFoundException, Param, Patch, UseGuards } from '@nestjs/common';
 import { CompanyService } from '../services/company.service';
-import { JwtAuthGuard } from 'src/modules/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
 import { CompanyContactDto } from '../dto/company-contact.dto';
 
 @Controller('company')
