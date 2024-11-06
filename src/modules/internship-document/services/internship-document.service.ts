@@ -4,6 +4,8 @@ import { ProfileEntity } from 'src/modules/profile/entities/profile.entity';
 import { Repository } from 'typeorm';
 import { InternshipDocumentEntity } from '../entities/internship-document.entity';
 import { StudentEntity } from 'src/modules/student/entities/student.entity';
+import { PutObjectCommand } from '@aws-sdk/client-s3';
+import { R2Client } from 'src/config/cloudflare-r2.config';
 
 @Injectable()
 export class InternshipDocumentService {
@@ -72,5 +74,29 @@ export class InternshipDocumentService {
 		return {
 			approval_status: updatedDocument.approval_status,
 		};
+	}
+
+	async uploadDocument(file: Express.Multer.File, internshipId: string, documentTypeId: string): Promise<InternshipDocumentEntity> {
+		const documentId = `${Date.now()}-${file.originalname}`;
+		const documentUrl = `${process.env.DEV_BUCKET_URL}/${documentId}`;
+
+		// Subir el archivo al bucket de R2
+		const command = new PutObjectCommand({
+			Bucket: process.env.BUCKET,
+			Key: documentId,
+			Body: file.buffer,
+			ContentType: file.mimetype,
+		});
+		await R2Client.send(command);
+
+		// Crear el registro en la base de datos
+		const internshipDocument = this.internshipDocumentRepository.create({
+			document_url: documentUrl,
+			internship: { id: internshipId },
+			documentType: { id: documentTypeId },
+		});
+		const savedDocument = await this.internshipDocumentRepository.save(internshipDocument);
+
+		return savedDocument;
 	}
 }
