@@ -8,7 +8,7 @@ export class InternshipDocumentController {
 	constructor(private readonly intershipService: InternshipDocumentService) {}
 
 	// @UseGuards(JwtAuthGuard)
-	@Get()
+	@Get('student')
 	async getDocumentsByInternshipAndStudent(@Query('internship_id') internshipId: string, @Query('code') code: string) {
 		// Validación básica de los parámetros
 		if (!internshipId || !code) {

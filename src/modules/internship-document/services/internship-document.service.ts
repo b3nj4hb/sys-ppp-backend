@@ -41,7 +41,7 @@ export class InternshipDocumentService {
 			.innerJoin('internship.student', 'student')
 			.where('internship.id = :internshipId', { internshipId })
 			.andWhere('student.id = :studentId', { studentId: student.id })
-			.select(['document.id', 'internshipDocument.approval_status', 'document.title', 'document.description', 'document.file_url'])
+			.select(['document.id', 'internshipDocument.approval_status', 'document.name', 'document.description', 'document.file_url'])
 			.getMany();
 
 		return internshipDocuments;
