@@ -40,12 +40,12 @@ export class InternshipService {
 
 		return internships.map((internship) => {
 			const { company, position, start_date, end_date, status } = internship;
-			const companyContact: { name_representative?: string; email?: string; phone?: string } = company.company_contact.length > 0 ? company.company_contact[0] : {};
+			const companyContact: { names?: string; lastname?: string; second_lastname?: string; email?: string; phone?: string } = company.company_contact.length > 0 ? company.company_contact[0] : {};
 			const { profile, academic_cycle } = internship.student || {};
 
 			return {
 				internshipId: internship.id,
-				companyRepresentative: companyContact.name_representative || 'No representative',
+				companyRepresentative: `${companyContact.names || 'No name'} ${companyContact.lastname || ''} ${companyContact.second_lastname || ''}`.trim() || 'No representative',
 				companyEmail: companyContact.email || 'No email available',
 				companyPhone: companyContact.phone || 'No phone available',
 				companyName: company.company_name,
