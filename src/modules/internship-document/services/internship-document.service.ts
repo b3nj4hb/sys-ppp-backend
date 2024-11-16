@@ -6,10 +6,13 @@ import { InternshipDocumentEntity } from '../entities/internship-document.entity
 import { StudentEntity } from '../../student/entities/student.entity';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { R2Client } from '../../../config/cloudflare-r2.config';
+import { DocumentTypeEntity } from '../entities/document-type.entity';
 
 @Injectable()
 export class InternshipDocumentService {
 	constructor(
+		@InjectRepository(DocumentTypeEntity)
+		private readonly documentTypeRepository: Repository<DocumentTypeEntity>,
 		@InjectRepository(ProfileEntity)
 		private readonly profileRepository: Repository<ProfileEntity>,
 		@InjectRepository(InternshipDocumentEntity)
@@ -17,6 +20,15 @@ export class InternshipDocumentService {
 		@InjectRepository(StudentEntity)
 		private readonly studentRepository: Repository<StudentEntity>,
 	) {}
+
+	async getDocumentTypes(): Promise<{ id: string; name: string; description: string }[]> {
+		const documentTypes = await this.documentTypeRepository.find();
+		return documentTypes.map((type) => ({
+			id: type.id,
+			name: type.name,
+			description: type.description,
+		}));
+	}
 
 	async getDocumentsByInternshipAndStudent(internshipId: string, code: string) {
 		// Busca el perfil del estudiante basado en el código

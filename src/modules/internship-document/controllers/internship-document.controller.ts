@@ -10,6 +10,16 @@ export class InternshipDocumentController {
 	constructor(private readonly internshipService: InternshipDocumentService) {}
 
 	@UseGuards(JwtAuthGuard)
+	@Get('types')
+	async getDocumentTypes() {
+		try {
+			return await this.internshipService.getDocumentTypes();
+		} catch (error) {
+			throw new BadRequestException(error.message);
+		}
+	}
+
+	@UseGuards(JwtAuthGuard)
 	@Get('student')
 	async getDocumentsByInternshipAndStudent(@Query('internship_id') internshipId: string, @Query('code') code: string) {
 		// Validación básica de los parámetros
