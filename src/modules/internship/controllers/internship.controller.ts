@@ -15,6 +15,12 @@ export class InternshipController {
 	}
 
 	@UseGuards(JwtAuthGuard)
+	@Get('details')
+	async getInternshipDetails(@Param('code') code: string) {
+		return this.internshipService.getInternshipDetails(code);
+	}
+
+	@UseGuards(JwtAuthGuard)
 	@Patch('status/:studentCode/:internshipId')
 	async updateInternshipStatus(@Param('studentCode') studentCode: string, @Param('internshipId') internshipId: string, @Body('status') status: 'pending' | 'approved' | 'rejected') {
 		return this.internshipService.updateInternshipStatus(studentCode, internshipId, status);

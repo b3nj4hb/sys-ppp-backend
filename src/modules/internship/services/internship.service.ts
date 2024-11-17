@@ -59,6 +59,41 @@ export class InternshipService {
 		});
 	}
 
+	async getInternshipDetails(code: string) {
+		const internships = await this.internshipRepository
+			.createQueryBuilder('internship')
+			.leftJoinAndSelect('internship.student', 'student')
+			.leftJoinAndSelect('student.profile', 'profile')
+			.leftJoinAndSelect('student.academic_cycle', 'academicCycle')
+			.leftJoinAndSelect('internship.company', 'company')
+			.leftJoinAndSelect('company.company_contact', 'company_contact')
+			.getMany();
+
+		if (!internships || internships.length === 0) {
+			throw new NotFoundException('Internship not found for this student');
+		}
+
+		return internships.map((internship) => {
+			const { company, position, start_date, end_date, status } = internship;
+			const companyContact: { names?: string; lastname?: string; second_lastname?: string; email?: string; phone?: string } = company.company_contact.length > 0 ? company.company_contact[0] : {};
+			const { profile, academic_cycle } = internship.student || {};
+
+			return {
+				internshipId: internship.id,
+				companyRepresentative: `${companyContact.names || 'No name'} ${companyContact.lastname || ''} ${companyContact.second_lastname || ''}`.trim() || 'No representative',
+				companyEmail: companyContact.email || 'No email available',
+				companyPhone: companyContact.phone || 'No phone available',
+				companyName: company.company_name,
+				companyDirection: company.direction,
+				companyRUC: company.ruc,
+				internshipPosition: position,
+				internshipStartDate: start_date ? start_date.toISOString().split('T')[0] : 'No start date',
+				internshipEndDate: end_date ? end_date.toISOString().split('T')[0] : 'No end date',
+				internshipStatus: status || 'No status available',
+			};
+		});
+	}
+
 	async updateInternshipStatus(studentCode: string, internshipId: string, status: 'pending' | 'approved' | 'rejected') {
 		const internship = await this.internshipRepository
 			.createQueryBuilder('internship')
