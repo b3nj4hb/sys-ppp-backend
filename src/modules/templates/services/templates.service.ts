@@ -13,6 +13,10 @@ export class TemplatesService {
 		private readonly templatesRepository: Repository<TemplatesEntity>,
 	) {}
 
+	async getAllTemplates(): Promise<TemplatesEntity[]> {
+		return await this.templatesRepository.find();
+	}
+
 	async uploadTemplate(file: Express.Multer.File, templateDto: TemplateDto): Promise<TemplatesEntity> {
 		const { name, description } = templateDto;
 		const templateId = `${Date.now()}-${file.originalname}`;
